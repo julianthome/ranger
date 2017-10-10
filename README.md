@@ -11,7 +11,6 @@ ranger helps you to perform various operations (union, intersection, addition, s
 [![Linux Build Status](https://img.shields.io/travis/julianthome/ranger/master.svg?label=Linux%20build)][travis]
 [![Windows Build status](https://img.shields.io/appveyor/ci/julianthome/ranger/master.svg?label=Windows%20build)][appveyor]
 [![Test Coverage](https://codecov.io/gh/julianthome/ranger/branch/master/graph/badge.svg)][coverage]
-[![Code Climate](https://codeclimate.com/github/julianthome/ranger/badges/gpa.svg)][codeclimate]
 
 [licence]: https://opensource.org/licenses/mit
 [language]: https://www.java.com
@@ -19,5 +18,4 @@ ranger helps you to perform various operations (union, intersection, addition, s
 [javadoc]: http://www.javadoc.io/doc/com.github.julianthome/ranger
 [travis]: https://travis-ci.org/julianthome/ranger
 [appveyor]: https://ci.appveyor.com/project/julianthome/ranger
-[codeclimate]: https://codeclimate.com/github/julianthome/ranger
 [coverage]: https://codecov.io/gh/julianthome/ranger
