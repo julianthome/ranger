@@ -175,25 +175,17 @@ public class TestBasicRange {
 
 
     @Test
-    public void testRegex() {
-        AtomicNumRange r101 = new AtomicNumRange(100,101);
-
-    }
-
-
-    @Test
     public void testSimple() {
         AtomicNumRange rinf = new AtomicNumRange();
-        System.out.println(rinf.toString());
+        System.out.println("1: " + rinf.toString());
         AtomicNumRange r4 = new AtomicNumRange(4);
-        System.out.println(r4.toString());
+        System.out.println("2: " + r4.toString());
         AtomicNumRange r101 = new AtomicNumRange(100,101);
-        System.out.println(r101.union(r4).toString());
-        System.out.println(rinf.intersect(r4).toString());
-        System.out.println(r101.union(r4).toRegex());
-        System.out.println(new AtomicNumRange(3,10).union(new AtomicNumRange
-                (2,13)).toString());
-
+        System.out.println("3: " + r101.union(r4).toString());
+        System.out.println("4: " + rinf.intersect(r4).toString());
+        System.out.println("6: " + new AtomicNumRange(3,10).union(new
+                AtomicNumRange(2,13)).toString());
+        System.out.println("5: " + r101.union(r4).toRegex());
 
     }
 

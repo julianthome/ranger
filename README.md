@@ -37,26 +37,26 @@ AtomicNumRange(2,13)).toString()` would yield the range `[+2,+13]`.
 
 ``` java
 AtomicNumRange rinf = new AtomicNumRange();
-System.out.println(rinf.toString());
+System.out.println("1: " + rinf.toString());
 AtomicNumRange r4 = new AtomicNumRange(4);
-System.out.println(r4.toString());
+System.out.println("2: " + r4.toString());
 AtomicNumRange r101 = new AtomicNumRange(100,101);
-System.out.println(r101.union(r4).toString());
-System.out.println(rinf.intersect(r4).toString());
-System.out.println(r101.union(r4).toRegex());
-System.out.println(new AtomicNumRange(3,10).union(new AtomicNumRange
-        (2,13)).toString());
+System.out.println("3: " + r101.union(r4).toString());
+System.out.println("4: " + rinf.intersect(r4).toString());
+System.out.println("6: " + new AtomicNumRange(3,10).union(new
+        AtomicNumRange(2,13)).toString());
+System.out.println("5: " + r101.union(r4).toRegex());
 ```
 
 The output of the program above is depicted below.
 
 ``` bash
-[-∞+0,+∞+0]
-[+4,+4]
-[[+4,+4],[+100,+101]]{+4,+101}
-[+4,+4]
-([4-9]|[1-9][0-9]{1,})|([1-9][0-9]{2,})
-[+2,+13]
+1: [-∞+0,+∞+0]
+2: [+4,+4]
+3: [[+4,+4],[+100,+101]]{+4,+101}
+4: [+4,+4]
+6: [+2,+13]
+5: ([4-9]|[1-9][0-9]{1,})|([1-9][0-9]{2,})
 ```
 
 In order to see more usage examples, please have a look at the [JUnit test
