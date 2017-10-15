@@ -224,6 +224,28 @@ public class AtomicNumRange extends Range {
                 .getMax());
     }
 
+    @Override
+    public String toRegex() {
+        if(isEmpty()) {
+            return ".{0}";
+        }
+
+        if(getMin().isBelowAll() && getMax().isAboveAll()){
+            return RexpUtils.INSTANCE.ALL;
+        } else if(this.getMin().isFixed()) {
+            return RexpUtils.INSTANCE.getRexpForMinInclusive(getMin()
+                    .endpoint);
+        } else if(this.getMax().isFixed()) {
+            return RexpUtils.INSTANCE.getRexpForMaxInclusive(getMax()
+                    .endpoint);
+        } else {
+            assert getMax().isFixed() && getMin().isFixed();
+
+            return RexpUtils.INSTANCE.getRexpForRangeInclusive(getMin()
+                    .endpoint, getMax().endpoint);
+        }
+    }
+
     private AtomicNumRange createRange(NumCut [] el) {
         NumCut min = NumCut.min(el);
         NumCut max = NumCut.max(el);

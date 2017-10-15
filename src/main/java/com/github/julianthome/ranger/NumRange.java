@@ -41,7 +41,7 @@ public class NumRange extends Range {
 
     private TreeMap<NumCut, AtomicNumRange> ran = new TreeMap<>();
 
-    protected NumRange() {
+    public NumRange() {
 
     }
 
@@ -445,6 +445,28 @@ public class NumRange extends Range {
 
         }
         return true;
+    }
+
+    @Override
+    public String toRegex() {
+        if(this.isEmpty()) {
+            return ".{0}";
+        }
+
+        if(this.isSingleton()) {
+            return getRangeMap().firstKey().toString();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for(AtomicNumRange ar : this.getRangeMap().values()) {
+            if(sb.length() != 0) {
+                sb.append("|");
+            }
+            sb.append(ar.toRegex());
+        }
+
+        return sb.toString();
+
     }
 
     public TreeMap<NumCut, AtomicNumRange> getRangeMap() {

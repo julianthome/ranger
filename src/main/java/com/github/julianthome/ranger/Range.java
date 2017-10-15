@@ -118,4 +118,6 @@ public abstract class Range {
 
     public abstract boolean equals(Object o);
 
+    public abstract String toRegex();
+
 }

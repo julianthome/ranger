@@ -1,28 +1,19 @@
-/**
- * ranger: a library for dealing with boolean and numeric (scattered) ranges
+/*
+ * cnetwork - a constraint network implementation for Java
+ * Copyright (C) 2017 Julian Thome <julian.thome.de@gmail.com>
  *
- * The MIT License (MIT)
+ * cnetwork is licensed under the EUPL, Version 1.1 or – as soon
+ * they will be approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence"); You may not use this work except in compliance with the
+ * Licence. You may obtain a copy of the Licence at:
  *
- * Copyright (c) 2017 Julian Thome <julian.thome.de@gmail.com>
+ * https://joinup.ec.europa.eu/sites/default/files/eupl1.1.-licence-en_0.pdf
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- **/
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, either express or implied.  See the Licence for the
+ * specific language governing permissions and limitations under the Licence.
+ */
 
 import com.github.julianthome.ranger.RexpUtils;
 import dk.brics.automaton.Automaton;
@@ -45,7 +36,7 @@ public class TestRexpUtils {
     public void simpleTests() {
 
 
-        String rexp = RexpUtils.getRexpForMax(100);
+        String rexp = RexpUtils.INSTANCE.getRexpForMaxExclusive(100);
         RegExp automaton = new RegExp(rexp);
 
         Automaton a = automaton.toAutomaton();
@@ -58,7 +49,7 @@ public class TestRexpUtils {
     public void testGetRexpForMinPos() {
 
         for(int elem : limitsPos) {
-            String rexp = RexpUtils.getRexpForMin(elem);
+            String rexp = RexpUtils.INSTANCE.getRexpForMinExclusive(elem);
             RegExp automaton = new RegExp(rexp);
 
             Automaton a = automaton.toAutomaton();
@@ -78,7 +69,7 @@ public class TestRexpUtils {
     public void testGetRexpForMaxPos() {
 
         for(int elem : limitsPos) {
-            String rexp = RexpUtils.getRexpForMax(elem);
+            String rexp = RexpUtils.INSTANCE.getRexpForMaxExclusive(elem);
 
             RegExp automaton = new RegExp(rexp);
 
@@ -99,7 +90,7 @@ public class TestRexpUtils {
     public void testGetRexpForMinNeg() {
 
         for(int elem : limitsNeg) {
-            String rexp = RexpUtils.getRexpForMin(elem);
+            String rexp = RexpUtils.INSTANCE.getRexpForMinExclusive(elem);
             RegExp automaton = new RegExp(rexp);
 
             Automaton a = automaton.toAutomaton();
@@ -119,7 +110,7 @@ public class TestRexpUtils {
     public void testGetRexpForMaxNeg() {
 
         for(int elem : limitsNeg) {
-            String rexp = RexpUtils.getRexpForMax(elem);
+            String rexp = RexpUtils.INSTANCE.getRexpForMaxExclusive(elem);
             RegExp automaton = new RegExp(rexp);
             Automaton a = automaton.toAutomaton();
             for (int i = 0; i > elem; i--) {
@@ -140,7 +131,7 @@ public class TestRexpUtils {
         LOGGER.info("check range");
         for(int row [] : ranges ) {
 
-            String rexp = RexpUtils.getRexpForRange(row[0], row[1]);
+            String rexp = RexpUtils.INSTANCE.getRexpForRangeExclusive(row[0], row[1]);
 
             LOGGER.info("Min " + row[0] + " Max " + row[1]  + " :" + rexp);
 
@@ -164,5 +155,6 @@ public class TestRexpUtils {
 
         }
     }
+
 
 }

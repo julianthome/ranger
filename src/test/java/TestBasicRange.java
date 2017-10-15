@@ -1,28 +1,19 @@
-/**
- * ranger: a library for dealing with boolean and numeric (scattered) ranges
+/*
+ * cnetwork - a constraint network implementation for Java
+ * Copyright (C) 2017 Julian Thome <julian.thome.de@gmail.com>
  *
- * The MIT License (MIT)
+ * cnetwork is licensed under the EUPL, Version 1.1 or – as soon
+ * they will be approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence"); You may not use this work except in compliance with the
+ * Licence. You may obtain a copy of the Licence at:
  *
- * Copyright (c) 2017 Julian Thome <julian.thome.de@gmail.com>
+ * https://joinup.ec.europa.eu/sites/default/files/eupl1.1.-licence-en_0.pdf
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- **/
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, either express or implied.  See the Licence for the
+ * specific language governing permissions and limitations under the Licence.
+ */
 
 import com.github.julianthome.ranger.*;
 import org.junit.Assert;
@@ -184,9 +175,25 @@ public class TestBasicRange {
 
 
     @Test
-    public void testsimple() {
-        //BasicRange r1 = new BasicRange(-2147483643,  2147483643);
-        LOGGER.info(RexpUtils.getRexpForRange(-2147483643,  2147483643));
+    public void testRegex() {
+        AtomicNumRange r101 = new AtomicNumRange(100,101);
+
+    }
+
+
+    @Test
+    public void testSimple() {
+        AtomicNumRange rinf = new AtomicNumRange();
+        System.out.println(rinf.toString());
+        AtomicNumRange r4 = new AtomicNumRange(4);
+        System.out.println(r4.toString());
+        AtomicNumRange r101 = new AtomicNumRange(100,101);
+        System.out.println(r101.union(r4).toString());
+        System.out.println(rinf.intersect(r4).toString());
+        System.out.println(r101.union(r4).toRegex());
+        System.out.println(new AtomicNumRange(3,10).union(new AtomicNumRange
+                (2,13)).toString());
+
 
     }
 
