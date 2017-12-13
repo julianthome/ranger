@@ -49,43 +49,35 @@ public enum RexpUtils {
     }
 
     public String getRexpForMinInclusive(long min) {
-        return getRexpForMinExclusive(min - 1);
+        return getRexpFor(true, min - 1);
     }
 
     public String getRexpForMaxInclusive(long max) {
-        return getRexpForMaxExclusive(max + 1);
+        return getRexpFor(false, max + 1);
     }
 
-
     public String getRexpForMinExclusive(long min) {
-        if (min < 0) {
-            min *= -1;
-            return "(" + getRexpFor(false, min, "-") + "|[0-9]|" + NPFX + "*)";
-        } else if (min > 0) {
-            // no prefix required
-            return "(" + getRexpFor(true, min, "") + ")";
-        } else { // treat zero as a special case
-            return NPFX + "*";
-        }
+        return getRexpFor(true, min);
     }
 
 
     public String getRexpForMaxExclusive(long max) {
-        if (max < 0) {
-            max *= -1;
-            return "(" + getRexpFor(true, max, "-") + ")";
-        } else if (max > 0) {
-            // no prefix required
-            return "(" + getRexpFor(false, max, "") + "|0|\\-" + NPFX + "*)";
-        } else { // treat zero as a special case
-            return "\\-" + NPFX + "*";
-        }
+        return getRexpFor(false, max);
     }
 
 
-    private String getRexpFor(boolean upwards, long number, String sig) {
+    private String getRexpFor(boolean upwards, long number) {
 
-        // The procedure below just works for non-negative integers
+        String sig = "";
+
+        if (number < 0) {
+            sig = "-";
+            number *= -1;
+            upwards = !upwards;
+        } else if (number == 0) {
+            return "(" + (upwards ? "" : "\\-") + NPFX + "*)";
+        }
+
         assert (number > 0);
 
         String snum = Long.toString(number);
@@ -113,20 +105,32 @@ public enum RexpUtils {
 
             }
         }
+
         if (upwards) {
             if (drexp.length() > 0) {
                 drexp.append("|");
             }
             drexp.append(sig + NPFX + "{" + (snum.length()) + ",}");
-        } else if (snum.length() > 1) {
-            if (drexp.length() > 0) {
-                drexp.append("|");
+
+
+        } else {
+
+            if (snum.length() > 1) {
+                if (drexp.length() > 0) {
+                    drexp.append("|");
+                }
+                drexp.append(sig + NPFX + "{0," + (snum.length() - 2) + "}");
             }
-            drexp.append(sig + NPFX + "{0," + (snum.length() - 2) + "}");
+
+            if (sig.equals(""))
+                drexp.append("|0|\\-" + NPFX + "*");
+
+            if (sig.equals("-"))
+                drexp.append("|[0-9]|" + NPFX + "*");
+
         }
 
-        return drexp.toString();
-
+        return "(" + drexp.toString() + ")";
     }
 
 

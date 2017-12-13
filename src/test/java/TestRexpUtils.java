@@ -39,20 +39,20 @@ public class TestRexpUtils {
     private static int NR_RUNS = 10000;
     private static int limitsNeg [] = {-999, 0, -111, -222, -89679};
     private static int limitsPos [] = {999, 0, 111, 222, 89679};
-    private static int ranges [][] = {{0, 100}, {1,999},{-2,-1}, {-45,678},{11,100}};
+    private static int ranges [][] = {{0, 100}, {1,999},{-2,-1}, {-45,678},
+            {11,100},{-1,1},{0,0}};
 
     @Test
     public void simpleTests() {
 
-
-        String rexp = RexpUtils.INSTANCE.getRexpForRangeInclusive(1,3);
+        String rexp = RexpUtils.INSTANCE.getRexpForRangeInclusive(0,100);
         RegExp automaton = new RegExp(rexp);
 
         Automaton a = automaton.toAutomaton();
 
-        Assert.assertTrue(a.run("2"));
+        Assert.assertFalse(a.run("-10000"));
         Assert.assertTrue(a.run("1"));
-        Assert.assertFalse(a.run("1000"));
+        //Assert.assertFalse(a.run("1000"));
 
     }
 
@@ -152,7 +152,7 @@ public class TestRexpUtils {
 
             for(int i = row[0] - NR_RUNS ; i <= row[0]; i++) {
                 //LOGGER.info("[!Match " + i  + "]:Run with " + i);
-                assert(!a.run(String.valueOf(i)));
+                Assert.assertFalse(a.run(String.valueOf(i)));
             }
             for(int i = row[0] + 1; i < row[1]; i++) {
                 //LOGGER.info("[Match " + i  + "]:Run with " + i);
