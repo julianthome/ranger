@@ -36,7 +36,7 @@ public class TestRexpUtils {
 
     final static Logger LOGGER = LoggerFactory.getLogger(TestRexpUtils.class);
 
-    private static int NR_RUNS = 100000;
+    private static int NR_RUNS = 10000;
     private static int limitsNeg [] = {-999, 0, -111, -222, -89679};
     private static int limitsPos [] = {999, 0, 111, 222, 89679};
     private static int ranges [][] = {{0, 100}, {1,999},{-2,-1}, {-45,678},{11,100}};
@@ -46,15 +46,13 @@ public class TestRexpUtils {
 
 
         String rexp = RexpUtils.INSTANCE.getRexpForRangeInclusive(1,3);
-
         RegExp automaton = new RegExp(rexp);
 
         Automaton a = automaton.toAutomaton();
 
         Assert.assertTrue(a.run("2"));
         Assert.assertTrue(a.run("1"));
-
-        LOGGER.info("regular expression" + rexp);
+        Assert.assertFalse(a.run("1000"));
 
     }
 

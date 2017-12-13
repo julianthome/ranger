@@ -36,6 +36,7 @@ public enum RexpUtils {
     INSTANCE;
 
     public static String ALL = "(0|-?[1-9])[0-9]*";
+    private static String NPFX = "[1-9][0-9]";
 
     final Logger LOGGER = LoggerFactory.getLogger(RexpUtils.class);
 
@@ -59,12 +60,12 @@ public enum RexpUtils {
     public String getRexpForMinExclusive(long min) {
         if (min < 0) {
             min *= -1;
-            return "(" + getRexpForMax(min, "-") + "|[0-9]|[1-9][0-9]*)";
+            return "(" + getRexpFor(false, min, "-") + "|[0-9]|" + NPFX + "*)";
         } else if (min > 0) {
             // no prefix required
-            return "(" + getRexpForMin(min, "") + ")";
+            return "(" + getRexpFor(true, min, "") + ")";
         } else { // treat zero as a special case
-            return "([1-9]|[1-9][0-9]+)";
+            return NPFX + "*";
         }
     }
 
@@ -72,124 +73,58 @@ public enum RexpUtils {
     public String getRexpForMaxExclusive(long max) {
         if (max < 0) {
             max *= -1;
-            return "(" + getRexpForMin(max, "-") + ")";
+            return "(" + getRexpFor(true, max, "-") + ")";
         } else if (max > 0) {
             // no prefix required
-            return "(" + getRexpForMax(max, "") + "|0|-[1-9][0-9]*)";
+            return "(" + getRexpFor(false, max, "") + "|0|\\-" + NPFX + "*)";
         } else { // treat zero as a special case
-            return "(-[1-9]|-[1-9][0-9]+)";
+            return "\\-" + NPFX + "*";
         }
     }
 
 
-    private String getRexpForMin(long min, String pfx) {
+    private String getRexpFor(boolean upwards, long number, String sig) {
 
         // The procedure below just works for non-negative integers
-        assert (min > 0);
+        assert (number > 0);
 
-        String mins = Long.toString(min);
-        char[] minc = mins.toCharArray();
-
-        StringBuilder drexp = new StringBuilder();
-        String option = "";
-
-        for (int l = minc.length - 1; l >= 0; l--) {
-
-            String carry = "";
-
-            if (drexp.length() > 0) {
-                option = "|";
-            }
-
-
-            char digit = minc[l];
-
-            if (digit != '9') {
-
-
-                ++digit;
-
-                if (digit != '9') {
-                    carry = "[" + (digit) + "-9]";
-                } else {
-                    carry = "9";
-                }
-
-                drexp.insert(0, pfx +
-                        mins.substring(0, l) +
-                        carry + StringUtils.repeat("[0-9]", mins.length() - l - 1) + option);
-
-            }
-        }
-
-        // Meta rule for matching everything that has more digits
-        if (drexp.length() > 0) {
-            drexp.append("|");
-        }
-        drexp.append(pfx + "[1-9][0-9]{" + (mins.length()) + ",}");
-
-
-        return drexp.toString();
-
-    }
-
-
-    private String getRexpForMax(long max, String pfx) {
-
-        // The procedure below just works for non-negative integers
-        assert (max > 0);
-
-        String maxs = Long.toString(max);
-
-        char[] maxc = maxs.toCharArray();
+        String snum = Long.toString(number);
 
         StringBuilder drexp = new StringBuilder();
 
-        String option = "";
+        int boundary = upwards ? 9 : 0;
 
-        for (int l = maxc.length - 1; l >= 0; l--) {
+        for (int l = snum.length() - 1; l >= 0; l--) {
 
-            String carry = "";
+            int digit = Integer.parseInt(String.valueOf(snum.charAt(l)));
 
-            if (drexp.length() > 0) {
-                option = "|";
-            }
+            if (digit != boundary) {
 
-            char digit = maxc[l];
+                digit = upwards ? digit + 1 : digit - 1;
 
+                String carry = digit != boundary
+                        ? "[" + Math.min(digit, boundary) + "-" + Math.max(digit, boundary) + "]"
+                        : String.valueOf(boundary);
 
-            if (digit != '0') {
-
-                --digit;
-
-                if (digit != '0') {
-                    carry = "[0-" + (digit) + "]";
-                    //LOGGER.info("CARRY " + carry);
-                } else {
-                    // if we reached the max significant digit
-                    carry = "0";
-                }
-
-                String digits = maxs.substring(0, l);
-
-                drexp.insert(0, pfx +
-                        digits +
-                        carry + StringUtils.repeat("[0-9]", maxs.length() - l - 1) + option);
+                drexp.insert(0, sig +
+                        snum.substring(0, l) +
+                        carry + StringUtils.repeat("[0-9]", snum.length() -
+                        l - 1) + (drexp.length() > 0 ? "|" : ""));
 
             }
-
-
-            if (maxs.length() > 1) {
-
-                if (drexp.length() > 0) {
-                    drexp.append("|");
-                }
-
-                drexp.append(pfx + "[1-9][0-9]{0," + (maxs.length() - 2) + "}");
-            }
-
         }
-        //LOGGER.info("DREXP " + drexp.toString());
+        if (upwards) {
+            if (drexp.length() > 0) {
+                drexp.append("|");
+            }
+            drexp.append(sig + NPFX + "{" + (snum.length()) + ",}");
+        } else if (snum.length() > 1) {
+            if (drexp.length() > 0) {
+                drexp.append("|");
+            }
+            drexp.append(sig + NPFX + "{0," + (snum.length() - 2) + "}");
+        }
+
         return drexp.toString();
 
     }
