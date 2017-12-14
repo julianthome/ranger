@@ -125,10 +125,8 @@ public enum RexpUtils {
                 addOption(drexp, sig + NPFX + "{0," + (snum.length() - 2) + "}");
             }
 
-            if (sig.equals(""))
-                addOption(drexp,"0|\\-" + NPFX + "*");
-            else
-                addOption(drexp,"[0-9]|" + NPFX + "*");
+
+            addOption(drexp,"0|" + (sig.equals("") ? "\\-" : "") + NPFX + "*");
 
         }
 
