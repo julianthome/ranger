@@ -66,6 +66,19 @@ public enum RexpUtils {
     }
 
 
+    private String getGroup(int min, int max) {
+        if(min == max)
+            return String.valueOf(min);
+
+        return "[" + min + "-" + max +"]";
+    }
+
+    private void addOption(StringBuilder sb, String opt) {
+        if(sb.length() > 0)
+            sb.insert(0,"|");
+        sb.insert(0,opt);
+    }
+
     private String getRexpFor(boolean upwards, long number) {
 
         String sig = "";
@@ -94,39 +107,28 @@ public enum RexpUtils {
 
                 digit = upwards ? digit + 1 : digit - 1;
 
-                String carry = digit != boundary
-                        ? "[" + Math.min(digit, boundary) + "-" + Math.max(digit, boundary) + "]"
-                        : String.valueOf(boundary);
+                String carry = getGroup(Math.min(digit, boundary), Math.max
+                        (digit, boundary));
 
-                drexp.insert(0, sig +
-                        snum.substring(0, l) +
-                        carry + StringUtils.repeat("[0-9]", snum.length() -
-                        l - 1) + (drexp.length() > 0 ? "|" : ""));
-
+                addOption(drexp, sig
+                        + snum.substring(0, l)
+                        + carry
+                        + StringUtils.repeat("[0-9]", snum.length() - l - 1));
             }
         }
 
         if (upwards) {
-            if (drexp.length() > 0) {
-                drexp.append("|");
-            }
-            drexp.append(sig + NPFX + "{" + (snum.length()) + ",}");
-
-
+            addOption(drexp, sig + NPFX + "{" + (snum.length()) + ",}");
         } else {
 
             if (snum.length() > 1) {
-                if (drexp.length() > 0) {
-                    drexp.append("|");
-                }
-                drexp.append(sig + NPFX + "{0," + (snum.length() - 2) + "}");
+                addOption(drexp, sig + NPFX + "{0," + (snum.length() - 2) + "}");
             }
 
             if (sig.equals(""))
-                drexp.append("|0|\\-" + NPFX + "*");
-
-            if (sig.equals("-"))
-                drexp.append("|[0-9]|" + NPFX + "*");
+                addOption(drexp,"0|\\-" + NPFX + "*");
+            else
+                addOption(drexp,"[0-9]|" + NPFX + "*");
 
         }
 
