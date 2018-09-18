@@ -28,11 +28,14 @@ package com.github.julianthome.ranger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class NumRange extends Range {
+public class NumRange extends Range implements Serializable {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(NumRange.class);
+
+    private static final long serialVersionUID = -8834622129119111310L;
 
     public static NumRange N = new NumRange(new AtomicNumRange(new NumCut(0L),
             new AboveAll()));

@@ -27,8 +27,8 @@
 import com.github.julianthome.ranger.AboveAll;
 import com.github.julianthome.ranger.BelowAll;
 import com.github.julianthome.ranger.NumCut;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,35 +53,35 @@ public class TestCut {
         NumCut below3 = new BelowAll(-1L);
 
 
-        Assert.assertTrue(nc1.isSmallerThan(nc2));
-        Assert.assertTrue(nc1.isSmallerEqualsThan(nc2));
-        Assert.assertTrue(nc2.isGreaterThan(nc1));
-        Assert.assertTrue(nc2.isGreaterEqualsThan(nc2));
-        Assert.assertFalse(nc1.equals(nc2));
-        Assert.assertTrue(nc3.equals(nc2));
-        Assert.assertTrue(nc3.equals(nc3));
+        Assertions.assertTrue(nc1.isSmallerThan(nc2));
+        Assertions.assertTrue(nc1.isSmallerEqualsThan(nc2));
+        Assertions.assertTrue(nc2.isGreaterThan(nc1));
+        Assertions.assertTrue(nc2.isGreaterEqualsThan(nc2));
+        Assertions.assertFalse(nc1.equals(nc2));
+        Assertions.assertTrue(nc3.equals(nc2));
+        Assertions.assertTrue(nc3.equals(nc3));
 
-        Assert.assertTrue(above1.isGreaterEqualsThan(nc1));
-        Assert.assertTrue(above1.isGreaterEqualsThan(nc2));
-        Assert.assertTrue(above1.isGreaterEqualsThan(nc3));
-        Assert.assertTrue(above2.isGreaterEqualsThan(above1));
-        Assert.assertTrue(above3.isSmallerEqualsThan(above1));
-        Assert.assertTrue(above1.isAboveAll());
-        Assert.assertFalse(above1.isBelowAll());
-        Assert.assertFalse(above1.isFixed());
+        Assertions.assertTrue(above1.isGreaterEqualsThan(nc1));
+        Assertions.assertTrue(above1.isGreaterEqualsThan(nc2));
+        Assertions.assertTrue(above1.isGreaterEqualsThan(nc3));
+        Assertions.assertTrue(above2.isGreaterEqualsThan(above1));
+        Assertions.assertTrue(above3.isSmallerEqualsThan(above1));
+        Assertions.assertTrue(above1.isAboveAll());
+        Assertions.assertFalse(above1.isBelowAll());
+        Assertions.assertFalse(above1.isFixed());
 
-        Assert.assertTrue(nc1.isSmallerThan(above1));
-        Assert.assertTrue(nc2.isSmallerThan(above1));
-        Assert.assertTrue(nc3.isSmallerThan(above1));
+        Assertions.assertTrue(nc1.isSmallerThan(above1));
+        Assertions.assertTrue(nc2.isSmallerThan(above1));
+        Assertions.assertTrue(nc3.isSmallerThan(above1));
 
 
-        Assert.assertNotEquals(above1, above2);
-        Assert.assertTrue(above2.isGreaterThan(above1));
-        Assert.assertTrue(below1.isSmallerThan(below2));
-        Assert.assertTrue(below3.isSmallerThan(below2));
-        Assert.assertTrue(below1.isBelowAll());
-        Assert.assertFalse(below1.isAboveAll());
-        Assert.assertFalse(below1.isFixed());
+        Assertions.assertNotEquals(above1, above2);
+        Assertions.assertTrue(above2.isGreaterThan(above1));
+        Assertions.assertTrue(below1.isSmallerThan(below2));
+        Assertions.assertTrue(below3.isSmallerThan(below2));
+        Assertions.assertTrue(below1.isBelowAll());
+        Assertions.assertFalse(below1.isAboveAll());
+        Assertions.assertFalse(below1.isFixed());
 
 
         LOGGER.debug("min {}", nc1.compareTo(nc2));

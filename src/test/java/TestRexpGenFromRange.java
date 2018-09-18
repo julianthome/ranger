@@ -26,8 +26,8 @@
 
 import com.github.julianthome.ranger.AtomicNumRange;
 import com.github.julianthome.ranger.NumRange;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,8 +68,8 @@ public class TestRexpGenFromRange {
             i++ ) {
             String rexp = ar.toRegex();
             //LOGGER.debug(rexp);
-            Assert.assertTrue(String.valueOf(i).matches(rexp));
-            Assert.assertTrue(String.valueOf(i).matches(grexp));
+            Assertions.assertTrue(String.valueOf(i).matches(rexp));
+            Assertions.assertTrue(String.valueOf(i).matches(grexp));
         }
 
     }

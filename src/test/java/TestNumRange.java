@@ -25,8 +25,8 @@
  **/
 
 import com.github.julianthome.ranger.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,10 +50,10 @@ public class TestNumRange {
 
         LOGGER.debug(ar.toString());
 
-        Assert.assertTrue(!ar.isEmpty());
-        Assert.assertFalse(ar.isSingleton());
-        Assert.assertTrue(!ar.getMin().isFixed());
-        Assert.assertTrue(!ar.getMax().isFixed());
+        Assertions.assertTrue(!ar.isEmpty());
+        Assertions.assertFalse(ar.isSingleton());
+        Assertions.assertTrue(!ar.getMin().isFixed());
+        Assertions.assertTrue(!ar.getMax().isFixed());
 
         AtomicNumRange nar = ar.addToLowerBound(7L);
         nar = nar.addToLowerBound(10L);
@@ -63,7 +63,7 @@ public class TestNumRange {
         nar = nar.addToLowerBound(new AboveAll());
         nar = nar.addToUpperBound(new BelowAll());
 
-        Assert.assertTrue(nar.isBetween(-5L,17L));
+        Assertions.assertTrue(nar.isBetween(-5L,17L));
     }
 
     @Test
@@ -76,24 +76,24 @@ public class TestNumRange {
         AtomicNumRange isect3 = ar4.intersect(ar3);
 
 
-        Assert.assertEquals(isect2.getMin(),new NumCut(0L));
-        Assert.assertEquals(isect2.getMax(),new NumCut(50L));
-        Assert.assertEquals(isect3, isect2);
+        Assertions.assertEquals(isect2.getMin(),new NumCut(0L));
+        Assertions.assertEquals(isect2.getMax(),new NumCut(50L));
+        Assertions.assertEquals(isect3, isect2);
 
 
         AtomicNumRange ar1 = new AtomicNumRange(1, 200);
         AtomicNumRange ar2 = new AtomicNumRange(-101, 0);
 
-        Assert.assertTrue(ar1.isAlwaysGreaterThan(ar2));
-        Assert.assertTrue(ar2.isAlwaysSmallerThan(ar1));
+        Assertions.assertTrue(ar1.isAlwaysGreaterThan(ar2));
+        Assertions.assertTrue(ar2.isAlwaysSmallerThan(ar1));
 
         AtomicNumRange isect1 = ar1.intersect(ar2);
-        Assert.assertNull(isect1);
+        Assertions.assertNull(isect1);
 
         Range union = ar1.union(ar2);
 
-        Assert.assertTrue(union.getMin().equals(new NumCut(-101L)));
-        Assert.assertTrue(union.getMax().equals(new NumCut(200L)));
+        Assertions.assertTrue(union.getMin().equals(new NumCut(-101L)));
+        Assertions.assertTrue(union.getMax().equals(new NumCut(200L)));
 
         LOGGER.debug("+++++++++++++++++++++++++++++++++++++++++++++");
         AtomicNumRange ar5 = new AtomicNumRange(0, 5);
@@ -306,7 +306,7 @@ public class TestNumRange {
 
         NumRange isect = rs0.intersect(rs1);
 
-        Assert.assertEquals(rs1,isect);
+        Assertions.assertEquals(rs1,isect);
 
         NumRange rs2 = new NumRange(new AtomicNumRange(1, 1));
         rs2.add(new AtomicNumRange(3, 3));
@@ -318,7 +318,7 @@ public class TestNumRange {
         rs2.add(new AtomicNumRange(19, 19));
         rs2.add(new AtomicNumRange(21, 21));
 
-        Assert.assertEquals(rs2.intersect(rs1),rs2);
+        Assertions.assertEquals(rs2.intersect(rs1),rs2);
 
     }
 

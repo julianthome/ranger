@@ -26,8 +26,8 @@
 import com.github.julianthome.ranger.RexpUtils;
 import dk.brics.automaton.Automaton;
 import dk.brics.automaton.RegExp;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,9 +50,9 @@ public class TestRexpUtils {
 
         Automaton a = automaton.toAutomaton();
 
-        Assert.assertFalse(a.run("-10000"));
-        Assert.assertTrue(a.run("1"));
-        //Assert.assertFalse(a.run("1000"));
+        Assertions.assertFalse(a.run("-10000"));
+        Assertions.assertTrue(a.run("1"));
+        //Assertions.assertFalse(a.run("1000"));
 
     }
 
@@ -152,7 +152,7 @@ public class TestRexpUtils {
 
             for(int i = row[0] - NR_RUNS ; i <= row[0]; i++) {
                 //LOGGER.info("[!Match " + i  + "]:Run with " + i);
-                Assert.assertFalse(a.run(String.valueOf(i)));
+                Assertions.assertFalse(a.run(String.valueOf(i)));
             }
             for(int i = row[0] + 1; i < row[1]; i++) {
                 //LOGGER.info("[Match " + i  + "]:Run with " + i);

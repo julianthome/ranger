@@ -25,8 +25,8 @@
  **/
 
 import com.github.julianthome.ranger.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,13 +56,13 @@ public class TestBasicRange {
         AtomicNumRange a2 = new AtomicNumRange(4,4);
         AtomicNumRange sum = a1.numadd(a2);
 
-        Assert.assertEquals(sum.getMin(), new BelowAll(4L));
-        Assert.assertEquals(sum.getMax(), new AboveAll(4L));
+        Assertions.assertEquals(sum.getMin(), new BelowAll(4L));
+        Assertions.assertEquals(sum.getMax(), new AboveAll(4L));
 
         AtomicNumRange diff = a1.numsub(a2);
 
-        Assert.assertEquals(diff.getMin(), new BelowAll(-4L));
-        Assert.assertEquals(diff.getMax(), new AboveAll(-4L));
+        Assertions.assertEquals(diff.getMin(), new BelowAll(-4L));
+        Assertions.assertEquals(diff.getMax(), new AboveAll(-4L));
 
         AtomicNumRange a3 = new AtomicNumRange(10,150);
         AtomicNumRange a4 = new AtomicNumRange(-100,50);
@@ -70,10 +70,10 @@ public class TestBasicRange {
         sum = a3.numadd(a4);
         diff = a3.numsub(a4);
 
-        Assert.assertTrue(sum.isBetween(-90,200));
+        Assertions.assertTrue(sum.isBetween(-90,200));
 
         LOGGER.debug("diff {}", diff);
-        Assert.assertTrue(diff.isBetween(-40,250));
+        Assertions.assertTrue(diff.isBetween(-40,250));
 
 
         AtomicNumRange a5 = new AtomicNumRange(new NumCut(1L), new AboveAll());
@@ -82,7 +82,7 @@ public class TestBasicRange {
 
         sum = a5.numsub(a6);
 
-        Assert.assertTrue(sum.isBetween(new BelowAll(-1L), new AboveAll()));
+        Assertions.assertTrue(sum.isBetween(new BelowAll(-1L), new AboveAll()));
 
         LOGGER.debug("sum {}", sum);
 
@@ -117,11 +117,11 @@ public class TestBasicRange {
         assert(nset2.size() == 1);
 
 
-        Assert.assertEquals(nset1.getMin(), new NumCut(150L));
-        Assert.assertEquals(nset1.getMax(), new NumCut(189L));
+        Assertions.assertEquals(nset1.getMin(), new NumCut(150L));
+        Assertions.assertEquals(nset1.getMax(), new NumCut(189L));
 
-        Assert.assertEquals(nset2.getMin(), new NumCut(191L));
-        Assert.assertEquals(nset2.getMax(), new NumCut(200L));
+        Assertions.assertEquals(nset2.getMin(), new NumCut(191L));
+        Assertions.assertEquals(nset2.getMax(), new NumCut(200L));
 
 
 
@@ -142,43 +142,43 @@ public class TestBasicRange {
     @Test
     public void testBooleanRange() {
 
-        Assert.assertTrue(trange.isAlwaysTrue());
-        Assert.assertTrue(frange.isAlwaysFalse());
-        Assert.assertTrue(!trange.isCatState());
-        Assert.assertTrue(!frange.isCatState());
+        Assertions.assertTrue(trange.isAlwaysTrue());
+        Assertions.assertTrue(frange.isAlwaysFalse());
+        Assertions.assertTrue(!trange.isCatState());
+        Assertions.assertTrue(!frange.isCatState());
 
-        Assert.assertTrue(trange.and(trange).isAlwaysTrue());
-        Assert.assertTrue(!trange.and(frange).isAlwaysTrue());
-        Assert.assertTrue(trange.and(frange).isAlwaysFalse());
-        Assert.assertTrue(frange.and(frange).isAlwaysFalse());
+        Assertions.assertTrue(trange.and(trange).isAlwaysTrue());
+        Assertions.assertTrue(!trange.and(frange).isAlwaysTrue());
+        Assertions.assertTrue(trange.and(frange).isAlwaysFalse());
+        Assertions.assertTrue(frange.and(frange).isAlwaysFalse());
 
-        Assert.assertTrue(trange.or(trange).isAlwaysTrue());
-        Assert.assertTrue(trange.or(frange).isAlwaysTrue());
-        Assert.assertTrue(trange.or(frange).isAlwaysTrue());
-        Assert.assertTrue(frange.or(frange).isAlwaysFalse());
+        Assertions.assertTrue(trange.or(trange).isAlwaysTrue());
+        Assertions.assertTrue(trange.or(frange).isAlwaysTrue());
+        Assertions.assertTrue(trange.or(frange).isAlwaysTrue());
+        Assertions.assertTrue(frange.or(frange).isAlwaysFalse());
 
         LOGGER.debug("" + frange.xor(trange));
 
-        Assert.assertTrue(frange.xor(trange).isAlwaysTrue());
+        Assertions.assertTrue(frange.xor(trange).isAlwaysTrue());
 
 
         BooleanRange ntrange = trange.negate();
 
-        Assert.assertTrue(ntrange.equals(frange));
+        Assertions.assertTrue(ntrange.equals(frange));
 
         trange = ntrange.negate();
 
         BooleanRange nfrange = frange.negate();
 
-        Assert.assertTrue(trange.equals(nfrange));
+        Assertions.assertTrue(trange.equals(nfrange));
 
         BooleanRange frange = nfrange.negate();
 
-        Assert.assertTrue(vrange.and(trange).isCatState());
-        Assert.assertTrue(vrange.and(frange).isAlwaysFalse());
+        Assertions.assertTrue(vrange.and(trange).isCatState());
+        Assertions.assertTrue(vrange.and(frange).isAlwaysFalse());
 
-        Assert.assertTrue(vrange.or(trange).isAlwaysTrue());
-        Assert.assertTrue(vrange.or(frange).isCatState());
+        Assertions.assertTrue(vrange.or(trange).isAlwaysTrue());
+        Assertions.assertTrue(vrange.or(frange).isCatState());
 
     }
 
