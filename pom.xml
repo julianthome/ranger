@@ -21,7 +21,7 @@
         <junit.version>5.2.0</junit.version>
         <dkbrics.version>1.11-8</dkbrics.version>
         <commonslang.version>3.6</commonslang.version>
-        <jacoco.version>0.8.1</jacoco.version>
+        <jacoco.version>0.8.4</jacoco.version>
     </properties>
 
 
