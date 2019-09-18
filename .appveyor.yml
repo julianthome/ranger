@@ -9,4 +9,5 @@ branches:
 build: off
 
 test_script:
+  - choco install jdk10
   - mvn clean package
